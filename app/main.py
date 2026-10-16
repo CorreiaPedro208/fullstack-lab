@@ -1,18 +1,17 @@
 """API de eventos usada em todas as etapas do projeto."""
 
 from datetime import date
-from typing import Annotated
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field, StringConstraints
+from pydantic import BaseModel, Field
 
 
 class EventInput(BaseModel):
     """Dados enviados pelo cliente ao cadastrar um evento."""
 
-    title: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+    title: str = Field(min_length=1)
     date: date
-    capacity: Annotated[int, Field(gt=0)]
+    capacity: int = Field(gt=0)
 
 
 def create_app() -> FastAPI:
